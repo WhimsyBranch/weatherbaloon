@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../uibuilder/common/images/node-blue.ico">
+
+    <title>Blank template - Node-RED uibuilder</title>
+    <meta name="description" content="Node-RED uibuilder - Blank template">
+
+    <!-- Your own CSS (defaults to loading uibuilders css)-->
+    <link type="text/css" rel="stylesheet" href="./index.css" media="all">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Golos+Text&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->
+    <script defer src="../uibuilder/uibuilder.iife.min.js"></script>
+    <script defer src="./index.js"></script>
+    <script defer src="./local_scripts.js"></script>
+    <!-- #endregion -->
+</head>
+<body class="uib">
+<section class="layout">
+    <div id="sidebar" class="tile">
+        <div class="sidebar-element" style="margin-top:20px;"><p>Temperatura dziś</p></div>
+        <div class="sidebar-element"><p>Archiwum temperatury</p></div>
+        <div class="sidebar-element"><p>Ciśnienie dziś</p></div>
+        <div class="sidebar-element"><p>Archiwum ciśnienia</p></div>
+    </div>
+    <div id="main">
+        <p class="title-text">Witaj na stronie głównej!</p>
+        <div id="weather-chart" class="tile"></div>
+        <div id="datetime" class="tile">
+                <script>
+                    function setDateTime() {
+                        const now = new Date();
+                        const months = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca",
+                        "sierpnia", "września", "października", "listopada", "grudnia"];
+                        const day = FixFormat(now.getHours());
+                        const month = months[now.getMonth()];
+                        const year = now.getFullYear();
+
+                        const hours = FixFormat(now.getHours());
+                        const minutes = FixFormat(now.getMinutes());
+                        const seconds = FixFormat(now.getSeconds());
+
+                        const date = `${day} ${month} ${year}`;
+                        const time = `${hours}:${minutes}:${seconds}`;
+
+                        document.querySelector('#datetime').innerHTML =
+                            "<p style='font-weight: normal; font-size: 30px; margin=0;'>" + date + "</p>" +
+                            "<p style='font-weight: bold; font-size: 50px;margin=0;'>" + time + "</p>";
+                    }
+                    setDateTime();
+                    setInterval(setDateTime, 1000);
+
+                    function FixFormat(value){
+                        if(value < 10) return "0" + value;
+                        return value;
+                    }
+                </script>
+        </div>
+
+    </div>
+
+</section>
+
+</body></html>
